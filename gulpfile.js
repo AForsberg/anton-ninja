@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var webserver = require('gulp-webserver');
+var connect = require('gulp-connect');
 
 gulp.task('sass', function() {
 	return gulp.src('./scss/*.scss')
@@ -8,16 +8,13 @@ gulp.task('sass', function() {
 		.pipe(gulp.dest('./build/css'))
 });
 
-gulp.task('webserver', function() {
-	return gulp.src('.')
-		.pipe(webserver({
-			livereload: true,
-			directoryListing: false,
-			open: false,
-            host: "0.0.0.0"
-		}));
+gulp.task('connect', function() {
+	connect.server({
+		root: ".",
+		livereload: true
+	});
 });
 
-gulp.task('default', ['webserver'], function() {
+gulp.task('default', ['connect'], function() {
 	gulp.watch(['./scss/*.scss'], ['sass']);
 });
